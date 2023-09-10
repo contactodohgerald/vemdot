@@ -1,0 +1,42 @@
+
+
+
+.lightred .move-up:hover,
+.lightred .comment li:before,
+.lightred div.pp_default .pp_close,
+.lightred .reservation-block span em:after,
+.lightred .events .button:hover,
+.lightred .events .flex-prev:hover,
+.lightred .events .flex-next:hover,
+.lightred .dot,
+.lightred .dot:before,
+.lightred .dot:after,
+.lightred .button:hover{
+	background: #c79572;
+}
+.lightred .title div,
+.lightred .mobile-menu:hover,
+.lightred .opening-hours:hover div,
+.lightred .opening-hours span,
+.lightred .address a:hover,
+.lightred .address a.active,
+.lightred .events .title:after,
+.lightred .events .title:before,
+.lightred .more-food:hover,
+.lightred .price,
+.lightred .menu-block .food-name:hover,
+.lightred .slider-text-wrapper .middle,
+.lightred .logo:hover,
+.lightred .main-navi a.active,
+.lightred .main-navi a:hover{
+	color: #c79572;
+}
+.lightred .events .flex-prev,
+.lightred .events .flex-next,
+.lightred .events .slides li,
+.lightred .button{
+	border-color: #c79572;
+}
+.lightred .reservation-block span em{
+	box-shadow: 0 0 0 2px #c79572;
+}

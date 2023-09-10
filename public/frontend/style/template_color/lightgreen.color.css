@@ -1,0 +1,41 @@
+
+
+.lightgreen .move-up:hover,
+.lightgreen .comment li:before,
+.lightgreen div.pp_default .pp_close,
+.lightgreen .reservation-block span em:after,
+.lightgreen .events .button:hover,
+.lightgreen .events .flex-prev:hover,
+.lightgreen .events .flex-next:hover,
+.lightgreen .dot,
+.lightgreen .dot:before,
+.lightgreen .dot:after,
+.lightgreen .button:hover{
+	background: #a1cc69;
+}
+.lightgreen .title div,
+.lightgreen .mobile-menu:hover,
+.lightgreen .opening-hours:hover div,
+.lightgreen .opening-hours span,
+.lightgreen .address a:hover,
+.lightgreen .address a.active,
+.lightgreen .events .title:after,
+.lightgreen .events .title:before,
+.lightgreen .more-food:hover,
+.lightgreen .price,
+.lightgreen .menu-block .food-name:hover,
+.lightgreen .slider-text-wrapper .middle,
+.lightgreen .logo:hover,
+.lightgreen .main-navi a.active,
+.lightgreen .main-navi a:hover{
+	color: #a1cc69;
+}
+.lightgreen .events .flex-prev,
+.lightgreen .events .flex-next,
+.lightgreen .events .slides li,
+.lightgreen .button{
+	border-color: #a1cc69;
+}
+.lightgreen .reservation-block span em{
+	box-shadow: 0 0 0 2px #a1cc69;
+}

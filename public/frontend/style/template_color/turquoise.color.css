@@ -1,0 +1,44 @@
+
+
+
+
+
+.turquoise .move-up:hover,
+.turquoise .comment li:before,
+.turquoise div.pp_default .pp_close,
+.turquoise .reservation-block span em:after,
+.turquoise .events .button:hover,
+.turquoise .events .flex-prev:hover,
+.turquoise .events .flex-next:hover,
+.turquoise .dot,
+.turquoise .dot:before,
+.turquoise .dot:after,
+.turquoise .button:hover{
+	background: #9cfffe;
+}
+.turquoise .title div,
+.turquoise .mobile-menu:hover,
+.turquoise .opening-hours:hover div,
+.turquoise .opening-hours span,
+.turquoise .address a:hover,
+.turquoise .address a.active,
+.turquoise .events .title:after,
+.turquoise .events .title:before,
+.turquoise .more-food:hover,
+.turquoise .price,
+.turquoise .menu-block .food-name:hover,
+.turquoise .slider-text-wrapper .middle,
+.turquoise .logo:hover,
+.turquoise .main-navi a.active,
+.turquoise .main-navi a:hover{
+	color: #9cfffe;
+}
+.turquoise .events .flex-prev,
+.turquoise .events .flex-next,
+.turquoise .events .slides li,
+.turquoise .button{
+	border-color: #9cfffe;
+}
+.turquoise .reservation-block span em{
+	box-shadow: 0 0 0 2px #9cfffe;
+}

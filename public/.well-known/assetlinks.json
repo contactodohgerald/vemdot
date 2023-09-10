@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.techocraft.vemdot_user",
+    "sha256_cert_fingerprints":
+    ["27:FE:D2:27:83:4C:D3:08:96:28:A3:DD:C9:CB:FC:68:F7:FB:51:24:00:B0:F0:9D:43:0E:7C:B9:BE:64:A2:F0"]
+  }
+}]

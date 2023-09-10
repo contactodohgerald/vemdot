@@ -1,0 +1,42 @@
+
+
+
+.pink .move-up:hover,
+.pink .comment li:before,
+.pink div.pp_default .pp_close,
+.pink .reservation-block span em:after,
+.pink .events .button:hover,
+.pink .events .flex-prev:hover,
+.pink .events .flex-next:hover,
+.pink .dot,
+.pink .dot:before,
+.pink .dot:after,
+.pink .button:hover{
+	background: #ffca78;
+}
+.pink .title div,
+.pink .mobile-menu:hover,
+.pink .opening-hours:hover div,
+.pink .opening-hours span,
+.pink .address a:hover,
+.pink .address a.active,
+.pink .events .title:after,
+.pink .events .title:before,
+.pink .more-food:hover,
+.pink .price,
+.pink .menu-block .food-name:hover,
+.pink .slider-text-wrapper .middle,
+.pink .logo:hover,
+.pink .main-navi a.active,
+.pink .main-navi a:hover{
+	color: #ffca78;
+}
+.pink .events .flex-prev,
+.pink .events .flex-next,
+.pink .events .slides li,
+.pink .button{
+	border-color: #ffca78;
+}
+.pink .reservation-block span em{
+	box-shadow: 0 0 0 2px #ffca78;
+}
