@@ -45,7 +45,7 @@
                 @forelse ($meals as $meal)
                     <tr>
                         <td class="text-center">{{ __(++$count)}}</td>
-                        <td class="text-center"><a href="/users/{{ __($meal->vendor->unique_id)}}">{{ __($meal->vendor->business_name ?? $meal->vendor->name )}}</a></td>
+                        <td class="text-center"><a href="/users/{{ __(optional($meal->vendor)->unique_id)}}">{{ __(optional($meal->vendor)->business_name ?? optional($meal->vendor)->name )}}</a></td>
                         <td class="text-center">{{ __($meal->categories->name)}}</td>
                         <td class="text-center">{{ __($meal->name)}}</td>
                         <td class="text-center">

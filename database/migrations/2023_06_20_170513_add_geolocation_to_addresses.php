@@ -14,7 +14,7 @@ class AddGeolocationToAddresses extends Migration
     public function up()
     {
         Schema::table('addresses', function (Blueprint $table) {
-            $table->text('geolocation')->nullable();
+            $table->point('geolocation')->nullable();
         });
     }
 

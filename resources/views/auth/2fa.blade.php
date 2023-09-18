@@ -28,7 +28,7 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="logo-centered">
-                            <a href="./"><img height="40" src="{{ asset('img/logo.png') }}" alt="RADMIN" ></a>
+                            <a href="./"><img height="40" src="{{asset('landing/assets/images/logo/logo.svg')}}" alt="RADMIN" ></a>
                         </div>
                         <div class="card-header">2FA Verification</div>
           

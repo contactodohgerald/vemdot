@@ -61,7 +61,7 @@ class User extends Authenticatable{
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'coordinates' => 'array'
+        'coordinates' => 'array',
     ];
 
     protected $attributes = [
@@ -169,7 +169,6 @@ class User extends Authenticatable{
     public function logisticCompany(){
         return $this->hasMany(VendorLogistic::class, 'vendor_id', 'unique_id');
     }
-
 
     public function isLogistic(){
         return $this->where('unique_id', $this->unique_id)->whereRelation('userRole', 'name', 'Logistic')->exists();
