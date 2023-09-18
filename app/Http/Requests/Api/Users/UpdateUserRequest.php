@@ -46,7 +46,7 @@ class UpdateUserRequest extends FormRequest{
             'city' => ['string'],
             'state' => [ 'string'],
             'address' => ['string'],
-            'avg_time' => ['nullable', 'string'],
+            'avg_time' => 'nullable|numeric',
             'password' => 'nullable|confirmed',
             'old_password' => 'required_with:password',
             'coordinates' => 'nullable|array',

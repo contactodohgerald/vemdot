@@ -80,7 +80,7 @@
                         <tbody>
                             <tr>
                                 <td style="text-align: center; padding-bottom:25px">
-                                    <a href="{{env('APP_URL')}}"><img style="height: 40px" src="{{asset('img/logo.png')}}"></a>
+                                    <a href="{{env('APP_URL')}}"><img style="height: 40px" src="{{asset('landing/assets/images/logo/logo.svg')}}"></a>
                                 </td>
                             </tr>
                         </tbody>

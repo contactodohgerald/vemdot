@@ -7,8 +7,10 @@ use App\Models\Order;
 use App\Models\User;
 use App\Traits\Generics;
 use App\Traits\ReturnTemplate;
+use App\Models\Role\AccountRole;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\DB;
 
 class MealService {
     use ReturnTemplate, Generics;
@@ -74,6 +76,30 @@ class MealService {
         return $this;
     }
 
+    public function filterByGeolocation($keyword1 = 'geolocation', $keyword2 = 'radius') {
+        $geolocation = request()->input($keyword1);
+    
+        if (!$geolocation) return $this;
+    
+        [$latitude, $longitude] = explode(',', $geolocation);
+        $distanceInKm = request()->input($keyword2, 15);
+    
+        // Create a POINT object from latitude and longitude
+        $targetLocation = DB::raw("POINT($latitude, $longitude)");
+
+        $role = AccountRole::where('name', 'Vendor')->first();
+    
+        $this->query = User::selectRaw("*, ST_DISTANCE(geolocation, $targetLocation) AS distance")
+            ->whereRaw("ST_DISTANCE(geolocation, $targetLocation) < $distanceInKm")
+            ->orderBy('distance')
+            ->where('role', optional($role)->unique_id)
+            ->with('meals');
+              
+        return $this;
+    }
+    
+    
+    
     function status($availability = "availability"){
         $this->query = $this->query->when(request()->input($availability), function($query, $status){
             $query->where('availability', $status);

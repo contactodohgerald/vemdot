@@ -7,10 +7,13 @@ use App\Http\Requests\Api\Meals\CreateMealRequest;
 use App\Models\Meal\Meal;
 use App\Models\Meal\MealCategory;
 use App\Models\Order;
+use App\Models\User;
 use App\Services\MealService;
 use Illuminate\Http\Request;
 
 class MealsController extends Controller{
+
+    public $mealService;
 
     function __construct(MealService $mealService){
         $this->mealService = $mealService;
@@ -99,21 +102,62 @@ class MealsController extends Controller{
         return $this->returnMessageTemplate(true, $this->returnSuccessMessage('deleted', "Meal"));
     }
 
+    public function fetchAllMeals2(Request $request, MealService $mealService, $vendor_id = null)
+    {
+        $user = $this->user();
+
+        $meals = $mealService
+            ->byUser($vendor_id)
+            ->hasVendor()
+            ->owner()
+            ->category()
+            ->orderBy()
+            ->orders(true)
+            ->search()
+            ->filterByCity()
+            ->filterByCategory()
+            ->status()
+            ->filterByGeolocation()
+            ->query();
+
+        $meals->when($request->input('min_time'), function ($query, $time) {
+            $query->where('avg_time', '>=', $time);
+        });
+
+        $meals->when($request->input('max_time'), function ($query, $time) {
+            $query->where('avg_time', '<=', $time);
+        });
+
+        if (request()->input('geolocation')) {
+            $meals = $meals->paginate($this->paginate);
+        } else {
+            $meals->withExists([
+                'favourites as is_favourite' => function ($query) use ($user) {
+                    $query->where('user_id', $user->unique_id);
+                }
+            ]);
+            $meals = $meals->paginate($this->paginate);
+        }
+
+        return $this->returnMessageTemplate(true, '', ['test'=>'nbjhgjh']);
+    }
+
     function fetchAllMeals(Request $request, MealService $mealService, $vendor_id = null){
         $user = $this->user();
 
         $meals = $mealService
-                        ->byUser($vendor_id)
-                        ->hasVendor()
-                        ->owner()
-                        ->category()
-                        ->orderBy()
-                        ->orders(true)
-                        ->search()
-                        ->filterByCity()
-                        ->filterByCategory()
-                        ->status()
-                        ->query();
+            ->byUser($vendor_id)
+            ->hasVendor()
+            ->owner()
+            ->category()
+            ->orderBy()
+            ->orders(true)
+            ->search()
+            ->filterByCity()
+            ->status()
+            ->filterByCategory()
+            ->filterByGeolocation()
+            ->query();
 
         $meals->when($request->input('min_time'), function($query, $time) {
             $query->where('avg_time', '>=', $time);
@@ -123,10 +167,16 @@ class MealsController extends Controller{
             $query->where('avg_time', '<=', $time);
         });
 
-        $meals = $meals->withExists([
-            'favourites as is_favourite' => function($query) use($user){
-                return $query->where('user_id', $user->unique_id);
-            }])->paginate($this->paginate);
+        if (request()->input('geolocation')) {
+            $meals = $meals->paginate($this->paginate);
+        } else {
+            $meals->withExists([
+                'favourites as is_favourite' => function ($query) use ($user) {
+                    $query->where('user_id', $user->unique_id);
+                }
+            ]);
+            $meals = $meals->paginate($this->paginate);
+        }
 
         return $this->returnMessageTemplate(true, '', $meals);
     }

@@ -14,7 +14,7 @@ class AddGeolocationToOrders extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->text('geolocation')->nullable();
+            $table->point('geolocation')->nullable();
         });
     }
 

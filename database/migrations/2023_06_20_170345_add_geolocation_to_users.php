@@ -14,7 +14,7 @@ class AddGeolocationToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->text('geolocation')->nullable();
+            $table->point('geolocation')->nullable();
         });
     }
 

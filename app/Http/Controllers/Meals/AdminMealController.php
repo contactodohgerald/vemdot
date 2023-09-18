@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Meals;
 
 use App\Http\Controllers\Controller;
+use App\Models\Meal\Meal;
 use Illuminate\Http\Request;
 use App\Services\MealService;
 use App\Models\Meal\MealCategory;
@@ -13,7 +14,7 @@ class AdminMealController extends Controller
 {
     //
 
-    protected function getAvaliableMeals(MealService $mealService, $startDate = null, $endDate = null){
+    protected function getAvaliableMeals($startDate = null, $endDate = null){
         $condition = [
             ['availability', $this->yes]
         ];
@@ -29,7 +30,7 @@ class AdminMealController extends Controller
 
         $payload = [
             'categories' => MealCategory::all(),
-            'meals' => $mealService->getOrder($condition, $this->paginate),
+            'meals' => Meal::where($condition)->paginate($this->paginate),
         ];
         return view('pages.meal.avaliable-meals', $payload);
     }
@@ -43,7 +44,7 @@ class AdminMealController extends Controller
         return redirect()->to('meals/interface/'.$type);
     } 
     //get all meals
-    protected function getPromotedMeals(MealService $mealService, $startDate = null, $endDate = null){
+    protected function getPromotedMeals($startDate = null, $endDate = null){
         $condition = [
             ['promoted', $this->yes]
         ];
@@ -59,7 +60,7 @@ class AdminMealController extends Controller
 
         $payload = [
             'categories' => MealCategory::all(),
-            'meals' => $mealService->getOrder($condition, $this->paginate),
+            'meals' => Meal::where($condition)->paginate($this->paginate),
         ];
         return view('pages.meal.meal-histroy', $payload);
     }

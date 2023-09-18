@@ -63,7 +63,7 @@ class LoginController extends Controller
         //send text message to the user
         // $sendTextMessage->sendTextMessage($user->phone, $appSettings->site_name, $message);
   
-        if(env('APP_ENV') == 'local'){
+        if(env('APP_ENV') === 'local'){
             $payload = [
                 '2fa_code' => $data['code'],
                 'user' => $user->with('userRole')->find($user->unique_id),

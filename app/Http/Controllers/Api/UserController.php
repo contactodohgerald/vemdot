@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller{
 
@@ -21,20 +22,21 @@ class UserController extends Controller{
         ]);
         
         if($validate->fails()) return $this->returnMessageTemplate(false, '', $validate->errors());
-        
+
+        $geolocation = $request->geolocation;
 
         $user->update($request->safe()->merge([
             'id_number' => $request->id_number,
             'id_image' => $request->id_image,
             'kyc_status' => 'pending',
             'push_notification'=> $request->push_notification ?? $user->push_notification,
-            'geolocation' => $request->geolocation
+            'geolocation' => DB::raw("POINT($geolocation[0], $geolocation[1])")
         ])->all());
 
         return $this->returnMessageTemplate(true,
-                        "Profile Updated Sucessfully!", [
-                            'user' => $user
-                        ]);
+            "Profile Updated Sucessfully!", [
+                'user' => $user
+            ]);
     }
 
     public function updateDeviceId(Request $request){
