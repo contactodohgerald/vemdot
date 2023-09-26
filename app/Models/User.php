@@ -78,7 +78,9 @@ class User extends Authenticatable{
     public function generateCodeFor2fa($user){
         $code = rand(1000, 9999);
 
-        if(optional($user)->email == 'test@production.com'){
+        $emailList = ['test@production.com', 'vendorprod@gmail.com', 'logisticprod@gmail.com', 'riderprod@gmail.com'];
+
+        if(in_array(optional($user)->email, $emailList)){    
             $code = "0000";
         }
 

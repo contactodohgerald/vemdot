@@ -18,15 +18,16 @@ trait VerifyTwoFactor {
         $find = UserCode::where('user_id', $user->unique_id)->where('code', $data['code'])->first();
         if(!$find)
             return ['status' => false, 'message' => $this->returnErrorMessage('wrong_code')];
-        
-        if($find->status == 'used' && optional($user)->email != 'test@production.com')
+
+        $emailList = ['test@production.com', 'vendorprod@gmail.com', 'logisticprod@gmail.com', 'riderprod@gmail.com'];
+        if($find->status == 'used' && !in_array(optional($user)->email, $emailList))
             return ['status' => false, 'message' => $this->returnErrorMessage('used_code')];
 
         //add thirty minutes to the time for the code that was created
         $currentTime = Carbon::now()->toDateTimeString();
         $expirationTime = Carbon::parse($find->created_at)->addMinutes(30)->toDateTimeString();
         //compare the dates
-        if ($currentTime > $expirationTime && optional($user)->email != 'test@production.com')
+        if ($currentTime > $expirationTime && !in_array(optional($user)->email, $emailList))
             return ['status' => false, 'message' => $this->returnErrorMessage('expired_token')];
         
         if (!is_null($find)) {
