@@ -30,7 +30,8 @@ class UserController extends Controller{
             'id_image' => $request->id_image,
             'kyc_status' => 'pending',
             'push_notification'=> $request->push_notification ?? $user->push_notification,
-            'geolocation' => DB::raw("POINT($geolocation[0], $geolocation[1])")
+            'coordinates' => DB::raw("POINT($geolocation[0], $geolocation[1])"),
+            'geolocation' => $geolocation
         ])->all());
 
         return $this->returnMessageTemplate(true,

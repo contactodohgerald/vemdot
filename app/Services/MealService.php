@@ -89,16 +89,14 @@ class MealService {
 
         $role = AccountRole::where('name', 'Vendor')->first();
     
-        $this->query = User::selectRaw("*, ST_DISTANCE(geolocation, $targetLocation) AS distance")
-            ->whereRaw("ST_DISTANCE(geolocation, $targetLocation) < $distanceInKm")
+        $this->query = User::selectRaw("*, ST_DISTANCE(coordinates, $targetLocation) AS distance")
+            ->whereRaw("ST_DISTANCE(coordinates, $targetLocation) < $distanceInKm")
             ->orderBy('distance')
             ->where('role', optional($role)->unique_id)
             ->with('meals');
               
         return $this;
     }
-    
-    
     
     function status($availability = "availability"){
         $this->query = $this->query->when(request()->input($availability), function($query, $status){

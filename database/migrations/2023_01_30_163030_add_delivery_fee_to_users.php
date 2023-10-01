@@ -13,9 +13,11 @@ class AddDeliveryFeeToUsers extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->integer('delivery_fee')->nullable();
-        });
+        if(!Schema::hasColumn('users', 'delivery_fee')){
+            Schema::table('users', function (Blueprint $table) {
+                $table->integer('delivery_fee')->nullable();
+            });
+        }      
     }
 
     /**

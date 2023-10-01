@@ -13,9 +13,11 @@ class AddCoordinatesToAddresses extends Migration
      */
     public function up()
     {
-        Schema::table('addresses', function (Blueprint $table) {
-            $table->text('coordinates')->nullable();
-        });
+        if(!Schema::hasColumn('addresses', 'coordinates')){
+            Schema::table('addresses', function (Blueprint $table) {
+                $table->point('coordinates')->nullable();
+            });
+        }
     }
 
     /**
