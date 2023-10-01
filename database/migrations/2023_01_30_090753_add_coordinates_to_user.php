@@ -13,9 +13,11 @@ class AddCoordinatesToUser extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->text('coordinates')->nullable();
-        });
+        if(!Schema::hasColumn('users', 'coordinates')){
+            Schema::table('users', function (Blueprint $table) {
+                $table->point('coordinates')->nullable();
+            });
+        }
     }
 
     /**

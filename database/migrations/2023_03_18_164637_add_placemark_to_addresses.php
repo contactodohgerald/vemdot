@@ -13,9 +13,11 @@ class AddPlacemarkToAddresses extends Migration
      */
     public function up()
     {
-        Schema::table('addresses', function (Blueprint $table) {
-            $table->string('placemark')->nullable();
-        });
+        if(!Schema::hasColumn('addresses', 'placemark')){
+            Schema::table('addresses', function (Blueprint $table) {
+                $table->string('placemark')->nullable();
+            });
+        }   
     }
 
     /**

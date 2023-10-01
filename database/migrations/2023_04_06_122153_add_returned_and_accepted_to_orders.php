@@ -13,9 +13,11 @@ class AddReturnedAndAcceptedToOrders extends Migration
      */
     public function up()
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->string('riderStatus')->nullable();
-        });
+        if(!Schema::hasColumn('orders', 'riderStatus')){
+            Schema::table('orders', function (Blueprint $table) {
+                $table->string('riderStatus')->nullable();
+            });
+        }   
     }
 
     /**

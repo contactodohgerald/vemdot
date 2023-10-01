@@ -13,9 +13,11 @@ class AddGeolocationToUsers extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->point('geolocation')->nullable();
-        });
+        if(!Schema::hasColumn('users', 'geolocation')){
+            Schema::table('users', function (Blueprint $table) {
+                $table->json('geolocation')->nullable();
+            });
+        }
     }
 
     /**
