@@ -108,11 +108,9 @@ class WalletController extends Controller {
                 'save_card' => $request->save_card ?? $this->no
             ]);
 
-            if(env('APP_ENV') == 'local'){
-                return $payment['data']['authorization_url']; //local / testing
-            }
+            return $payment['data']['authorization_url']; 
 
-            return Redirect::to($payment['data']['authorization_url']); //live / deployment
+            // return Redirect::to($payment['data']['authorization_url']); //live / deployment
         }
 
         return $this->returnMessageTemplate(false, $this->returnErrorMessage('unknown_error'));
