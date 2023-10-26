@@ -71,10 +71,10 @@ class AdminController extends Controller
     }
 
     protected function fetchAdminInterface($startDate = null, $endDate = null){
-        if($this->user()->userRole->name != 'Super Admin'){
-            Alert::error('Error', $this->returnErrorMessage('not_authorized'));
-            return redirect()->back();
-        }
+        // if($this->user()->userRole->name != 'Super Admin'){
+        //     Alert::error('Error', $this->returnErrorMessage('not_authorized'));
+        //     return redirect()->back();
+        // }
         $role = AccountRole::where('name', 'Admin')->first();
         if($role == null){
             Alert::error('Error', $this->returnErrorMessage('unknown_error'));

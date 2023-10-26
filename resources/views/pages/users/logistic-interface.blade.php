@@ -46,8 +46,8 @@
                         <td class="text-center">{{ __($each_logistic->phone)}}</td>
                         <td class="text-center">{{ __($each_logistic->userRole->name ?? $each_logistic->role)}}</td>
                         <td class="text-center">
-                            <span class="badge light badge-{{ $each_logistic->status == 'pending' ? 'warning':'success' }} ">
-                                {{ $each_logistic->status == 'pending' ? 'Blocked' : 'Confirmed' }}
+                            <span class="badge light badge-{{ $each_logistic->status == 'blocked' ? 'warning':'success' }} ">
+                                {{ $each_logistic->status == 'blocked' ? 'Blocked' : 'Active' }}
                             </span>
                         </td>
                         <td class="text-center">
@@ -57,7 +57,7 @@
                         <td class="text-center">
                             <div class="table-actions">
                                 <a href="/users/{{ __($each_logistic->unique_id)}}"><i class="ik ik-edit-2"></i></a>
-                                <a data-toggle="modal" data-target="#{{$each_logistic->status == 'pending' ? 'unBlockVendor' : 'blockVendor'}}{{$each_logistic->unique_id}}"><i class="ik ik-eye"></i></a>
+                                <a data-toggle="modal" data-target="#{{$each_logistic->status == 'blocked' ? 'unBlockVendor' : 'blockVendor'}}{{$each_logistic->unique_id}}"><i class="ik ik-eye"></i></a>
                                 <a data-toggle="modal" data-target="#deleteVendor{{$each_logistic->unique_id}}"><i class="ik ik-trash-2"></i></a>
                             </div>
                         </td>

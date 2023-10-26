@@ -31,6 +31,7 @@ class VendorController extends Controller
         $vendor = User::where($condition)
             ->orderBy('id', 'desc')
             ->paginate($this->paginate);
+        
         $payload = [
             'vendor' => $vendor,
         ];
@@ -61,7 +62,7 @@ class VendorController extends Controller
             return redirect()->back();
         }
         if($request->status == 'block'){
-            $user->update(['status' => $this->pending]);
+            $user->update(['status' => $this->blocked]);
         }else{
             $user->update(['status' => $this->confirmed]);
         }

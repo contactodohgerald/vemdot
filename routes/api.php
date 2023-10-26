@@ -82,7 +82,7 @@ Route::get('/account-roles', [UserController::class, 'fetchAccountRoles']);
 Route::get('/fetch/all/banks', [BankController::class,'fetchAllBanks']);
 Route::get('/fetch/single/bank/{code?}', [BankController::class,'fetchSingleBank']);
 
-Route::group(['middleware' => 'auth:sanctum', 'ability:full_access'], function(){
+Route::group(['middleware' => 'auth:sanctum', 'ability:full_access', 'blocked'], function(){
     //log user out
     Route::get('/user-role', [UserController::class, 'fetchCurrentUserRole']);
     Route::post('upload', [MediaController::class, 'upload']);

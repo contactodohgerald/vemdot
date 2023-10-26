@@ -45,15 +45,15 @@
                         <td class="text-center">{{ __($each_admin->phone)}}</td>
                         <td class="text-center">{{ __($each_admin->userRole->name ?? $each_admin->role)}}</td>
                         <td class="text-center">
-                            <span class="badge light badge-{{ $each_admin->status == 'pending' ? 'warning':'success' }} ">
-                                {{ $each_admin->status == 'pending' ? 'Blocked' : 'Confirmed' }}
+                            <span class="badge light badge-{{ $each_admin->status == 'blocked' ? 'warning':'success' }} ">
+                                {{ $each_admin->status == 'blocked' ? 'Blocked' : 'Active' }}
                             </span>
                         </td>
                         <td class="text-center">{{ __($each_admin->created_at->diffForHumans())}}</td>
                         <td class="text-center">
                             <div class="table-actions">
                                 <a href="/users/{{ __($each_admin->unique_id)}}"><i class="ik ik-edit-2"></i></a>
-                                <a data-toggle="modal" data-target="#{{$each_admin->status == 'pending' ? 'unBlockAdmin' : 'blockAdmin'}}{{$each_admin->unique_id}}"><i class="ik ik-eye"></i></a>
+                                <a data-toggle="modal" data-target="#{{$each_admin->status == 'blocked' ? 'unBlockAdmin' : 'blockAdmin'}}{{$each_admin->unique_id}}"><i class="ik ik-eye"></i></a>
                                 <a data-toggle="modal" data-target="#deleteAdmin{{$each_admin->unique_id}}"><i class="ik ik-trash-2"></i></a>
                             </div>
                         </td>
