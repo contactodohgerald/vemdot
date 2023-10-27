@@ -106,6 +106,8 @@ class MealsController extends Controller{
     {
         $user = $this->user();
 
+        return $user;
+
         $meals = $mealService
             ->byUser($vendor_id)
             ->hasVendor()
@@ -139,16 +141,15 @@ class MealsController extends Controller{
             $meals = $meals->paginate($this->paginate);
         }
 
-        return $this->returnMessageTemplate(true, '', ['test'=>'nbjhgjh']);
+        return $this->returnMessageTemplate(true, '', $meals);
     }
 
-    function fetchAllMeals(Request $request, MealService $mealService, $vendor_id = null){
+    public function fetchAllMeals(Request $request, MealService $mealService, $vendor_id = null){
         $user = $this->user();
 
         $meals = $mealService
             ->byUser($vendor_id)
-            ->hasVendor()
-            ->owner()
+            ->filterByGeolocation()
             ->category()
             ->orderBy()
             ->orders(true)
@@ -156,7 +157,6 @@ class MealsController extends Controller{
             ->filterByCity()
             ->status()
             ->filterByCategory()
-            ->filterByGeolocation()
             ->query();
 
         $meals->when($request->input('min_time'), function($query, $time) {
@@ -167,16 +167,12 @@ class MealsController extends Controller{
             $query->where('avg_time', '<=', $time);
         });
 
-        if (request()->input('geolocation')) {
-            $meals = $meals->paginate($this->paginate);
-        } else {
-            $meals->withExists([
-                'favourites as is_favourite' => function ($query) use ($user) {
-                    $query->where('user_id', $user->unique_id);
-                }
-            ]);
-            $meals = $meals->paginate($this->paginate);
-        }
+        $meals->withExists([
+            'favourites as is_favourite' => function ($query) use ($user) {
+                $query->where('user_id', $user->unique_id);
+            }
+        ]);
+        $meals = $meals->paginate($this->paginate);
 
         return $this->returnMessageTemplate(true, '', $meals);
     }

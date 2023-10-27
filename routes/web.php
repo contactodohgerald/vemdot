@@ -55,7 +55,7 @@ Route::get('password/reset/{token}', [ResetPasswordController::class,'showResetF
 Route::post('password/reset', [ResetPasswordController::class,'reset'])->name('password.update');
 
 
-Route::group(['middleware' => 'auth'], function(){
+Route::group(['middleware' => 'auth', 'blocked'], function(){
 	// logout route
 	Route::get('/logout', [LoginController::class,'logout']);
 	Route::get('/clear-cache', [HomeController::class,'clearCache']);

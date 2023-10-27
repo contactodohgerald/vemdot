@@ -69,6 +69,7 @@ class Kernel extends HttpKernel
         'kyc.status' => CheckKycStatus::class,
         'user.status' => CheckUserRole::class,
         '2fa' => \App\Http\Middleware\Check2FA::class,
+        'blocked' => \App\Http\Middleware\UserBlockStatus::class,
         'abilities' => \Laravel\Sanctum\Http\Middleware\CheckAbilities::class,
         'ability' => \Laravel\Sanctum\Http\Middleware\CheckForAnyAbility::class,
     ];

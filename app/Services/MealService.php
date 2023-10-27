@@ -3,14 +3,10 @@
 namespace App\Services;
 
 use App\Models\Meal\Meal;
-use App\Models\Order;
 use App\Models\User;
 use App\Traits\Generics;
 use App\Traits\ReturnTemplate;
 use App\Models\Role\AccountRole;
-use Illuminate\Database\Query\Builder;
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\DB;
 
 class MealService {
     use ReturnTemplate, Generics;
@@ -21,7 +17,6 @@ class MealService {
         $this->query = $meal ?? Meal::query();
         return $this->query;
     }
-
 
     function query(){
         return $this->query;
@@ -76,6 +71,26 @@ class MealService {
         return $this;
     }
 
+    public function haversineDistance($lat1, $lon1, $lat2, $lon2) {
+        // Convert degrees to radians
+        $lat1 = deg2rad($lat1);
+        $lon1 = deg2rad($lon1);
+        $lat2 = deg2rad($lat2);
+        $lon2 = deg2rad($lon2);
+    
+        // Radius of the Earth in kilometers (mean value)
+        $earthRadius = 6371;
+    
+        // Haversine formula
+        $dlat = $lat2 - $lat1;
+        $dlon = $lon2 - $lon1;
+        $a = sin($dlat / 2) * sin($dlat / 2) + cos($lat1) * cos($lat2) * sin($dlon / 2) * sin($dlon / 2);
+        $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+        $distance = $earthRadius * $c;
+    
+        return $distance;
+    }    
+
     public function filterByGeolocation($keyword1 = 'geolocation', $keyword2 = 'radius') {
         $geolocation = request()->input($keyword1);
     
@@ -84,19 +99,27 @@ class MealService {
         [$latitude, $longitude] = explode(',', $geolocation);
         $distanceInKm = request()->input($keyword2, 15);
     
-        // Create a POINT object from latitude and longitude
-        $targetLocation = DB::raw("POINT($latitude, $longitude)");
-
-        $role = AccountRole::where('name', 'Vendor')->first();
+        $vendors = User::where('role', AccountRole::where('name', 'Vendor')->value('unique_id'))
+            ->whereNotNull('geolocation')
+            ->whereNotNull('coordinates')
+            ->where('status', 'confirmed')
+            // ->where('kyc_status', 'confirmed')
+            ->get();   
     
-        $this->query = User::selectRaw("*, ST_DISTANCE(coordinates, $targetLocation) AS distance")
-            ->whereRaw("ST_DISTANCE(coordinates, $targetLocation) < $distanceInKm")
-            ->orderBy('distance')
-            ->where('role', optional($role)->unique_id)
-            ->with('meals');
-              
+        $filteredVendorIds = $vendors->filter(function ($vendor) use ($latitude, $longitude, $distanceInKm) {
+            $explodedCoords = $vendor->geolocation;
+            $vendorLatitude = $explodedCoords[0];
+            $vendorLongitude = $explodedCoords[1];
+            $distance = $this->haversineDistance($vendorLatitude, $vendorLongitude, $latitude, $longitude);
+            return $distance <= $distanceInKm;
+        })->pluck('unique_id');
+    
+       // Fetch meals associated with the filtered vendor IDs
+       $this->query = Meal::whereIn('user_id', $filteredVendorIds);
+    
         return $this;
     }
+    
     
     function status($availability = "availability"){
         $this->query = $this->query->when(request()->input($availability), function($query, $status){

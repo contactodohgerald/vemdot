@@ -44,15 +44,15 @@
                                     <td class="text-center">{{ __($user->email)}}</td>
                                     <td class="text-center">{{ __($user->userRole->name ?? $user->role)}}</td>
                                     <td class="text-center">
-                                        <span class="badge light badge-{{ $user->status == 'pending' ? 'warning':'success' }} ">
-                                            {{ $user->status == 'pending' ? 'Blocked' : 'Confirmed' }}
+                                        <span class="badge light badge-{{ $user->status == 'blocked' ? 'warning':'success' }} ">
+                                            {{ $user->status == 'blocked' ? 'Blocked' : 'Active' }}
                                         </span>
                                     </td>
                                     <td class="text-center">{{ __($user->created_at->diffForHumans())}}</td>
                                     <td class="text-center">
                                         <div class="table-actions">
                                             <a href="/users/{{ __($user->unique_id)}}"><i class="ik ik-edit-2"></i></a>
-                                            <a data-toggle="modal" data-target="#{{$user->status == 'pending' ? 'unBlockUser' : 'blockUser'}}{{$user->unique_id}}"><i class="ik ik-eye"></i></a>
+                                            <a data-toggle="modal" data-target="#{{$user->status == 'blocked' ? 'unBlockUser' : 'blockUser'}}{{$user->unique_id}}"><i class="ik ik-eye"></i></a>
                                             <a data-toggle="modal" data-target="#deleteUser{{$user->unique_id}}"><i class="ik ik-trash-2"></i></a>
                                         </div>
                                     </td>

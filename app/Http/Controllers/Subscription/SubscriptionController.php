@@ -98,10 +98,8 @@ class SubscriptionController extends Controller
                 if($sub){
                     //create transaction record
                     $this->createTransaction($plan, $reference, $orderID, $description, null,  $payment['data']);
-                    if(env('APP_ENV') == 'local')
-                        return $payment['data']['authorization_url']; //local / testing
+                    return $payment['data']['authorization_url']; //local / testing
 
-                    return Redirect::to($payment['data']['authorization_url']); //live / deployment
                 }else{
                     $update = $this->updateSubscription($plan, $explodeMeal, 'wallet');
                     if($update)
