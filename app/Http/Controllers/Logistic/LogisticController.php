@@ -103,8 +103,12 @@ class LogisticController extends Controller
     }
 
     protected function fetchAllRiders($logistic = null){
-        if($logistic == null)
+        if($logistic == null){
             $logistic = $this->user()->unique_id;
+        }else{
+            $logistic = $logistic;
+        }
+           
         $riders = User::where('business_name', $logistic)
             ->orderBy('id', 'desc')
             ->get();

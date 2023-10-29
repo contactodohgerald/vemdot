@@ -37,7 +37,7 @@ class UpdateUserRequest extends FormRequest{
         return [
             'avatar' => 'nullable|string|url',
             'name' => 'required|string',
-            'phone' => 'required|string',
+            'phone' => 'nullable|string',
             'email' => ['required', 'email', Rule::unique('users')->ignore($user->unique_id, 'unique_id')],
             'id_number' => 'nullable|string',
             'id_image' =>'nullable|url',

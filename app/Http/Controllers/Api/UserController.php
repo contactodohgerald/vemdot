@@ -17,8 +17,8 @@ class UserController extends Controller{
         $user = $this->user();
         
         $validate = Validator::make($request->all(), [
-            'id_number' => 'required|string',
-            'id_image' => 'required|string'
+            'id_number' => 'nullable|string',
+            'id_image' => 'nullable|string'
         ]);
         
         if($validate->fails()) return $this->returnMessageTemplate(false, '', $validate->errors());
