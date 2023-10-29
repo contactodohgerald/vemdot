@@ -24,6 +24,10 @@ class MealsController extends Controller{
 
         if(!MealCategory::find($request->category)) return $this->returnMessageTemplate(false, "The Selected Meal Category Does not Exist");
 
+        if($user->kyc_status == 'pending') return $this->returnMessageTemplate(false, "Account can not add meal, awaiting kyc approval");
+
+        if($user->status == 'blocked') return $this->returnMessageTemplate(false, "Account is blocked. please contact the admin");
+
         $unique_id = $this->createUniqueId('meals');
 
         $meal = Meal::create($request->safe()->merge([
@@ -102,48 +106,6 @@ class MealsController extends Controller{
         return $this->returnMessageTemplate(true, $this->returnSuccessMessage('deleted', "Meal"));
     }
 
-    public function fetchAllMeals2(Request $request, MealService $mealService, $vendor_id = null)
-    {
-        $user = $this->user();
-
-        return $user;
-
-        $meals = $mealService
-            ->byUser($vendor_id)
-            ->hasVendor()
-            ->owner()
-            ->category()
-            ->orderBy()
-            ->orders(true)
-            ->search()
-            ->filterByCity()
-            ->filterByCategory()
-            ->status()
-            ->filterByGeolocation()
-            ->query();
-
-        $meals->when($request->input('min_time'), function ($query, $time) {
-            $query->where('avg_time', '>=', $time);
-        });
-
-        $meals->when($request->input('max_time'), function ($query, $time) {
-            $query->where('avg_time', '<=', $time);
-        });
-
-        if (request()->input('geolocation')) {
-            $meals = $meals->paginate($this->paginate);
-        } else {
-            $meals->withExists([
-                'favourites as is_favourite' => function ($query) use ($user) {
-                    $query->where('user_id', $user->unique_id);
-                }
-            ]);
-            $meals = $meals->paginate($this->paginate);
-        }
-
-        return $this->returnMessageTemplate(true, '', $meals);
-    }
-
     public function fetchAllMeals(Request $request, MealService $mealService, $vendor_id = null){
         $user = $this->user();
 
@@ -154,6 +116,45 @@ class MealsController extends Controller{
             ->orderBy()
             ->orders(true)
             ->search()
+            ->filterByCity()
+            ->status()
+            ->filterByCategory()
+            ->query();
+
+        $meals->when($request->input('min_time'), function($query, $time) {
+            $query->where('avg_time', '>=', $time);
+        });
+        
+        $meals->when($request->input('max_time'), function($query, $time) {
+            $query->where('avg_time', '<=', $time);
+        });
+
+        $meals->withExists([
+            'favourites as is_favourite' => function ($query) use ($user) {
+                $query->where('user_id', $user->unique_id);
+            }
+        ]);
+
+        $meals = $meals->whereHas('vendor', function ($query) {
+            $query->where('kyc_status', '!=', 'pending')->where('status', '!=', 'blocked');
+        });
+
+        $meals = $meals->paginate($this->paginate);
+        
+        return $this->returnMessageTemplate(true, '', $meals);
+    }
+
+    public function fetchAllMeals2(Request $request, MealService $mealService, $vendor_id = null){
+        $user = $this->user();
+
+        $meals = $mealService
+            ->byUser($vendor_id)
+            ->filterByGeolocation()
+            ->category()
+            ->orderBy()
+            ->orders(true)
+            ->search()
+            ->owner()
             ->filterByCity()
             ->status()
             ->filterByCategory()
