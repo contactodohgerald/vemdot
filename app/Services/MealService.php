@@ -102,8 +102,8 @@ class MealService {
         $vendors = User::where('role', AccountRole::where('name', 'Vendor')->value('unique_id'))
             ->whereNotNull('geolocation')
             ->whereNotNull('coordinates')
-            // ->where('status', 'confirmed')
-            // ->where('kyc_status', 'confirmed')
+            ->where('status', 'confirmed')
+            ->where('kyc_status', 'confirmed')
             ->get();   
     
         $filteredVendorIds = $vendors->filter(function ($vendor) use ($latitude, $longitude, $distanceInKm) {
