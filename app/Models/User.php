@@ -69,7 +69,7 @@ class User extends Authenticatable
     protected $attributes = [
         'kyc_status' => 'pending',
         'availability' => 'yes',
-        'status' => 'confirmed',
+        'status' => 'active',
         'two_factor' => 'no',
         'two_factor_access' => 'text',
         'main_balance' => 0,
@@ -141,8 +141,7 @@ class User extends Authenticatable
         return $roles;
     }
 
-    static function admin()
-    {
+    static function admin(){
         return static::where('role', 'super_admin')->first();
     }
 

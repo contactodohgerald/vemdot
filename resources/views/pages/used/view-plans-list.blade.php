@@ -20,7 +20,7 @@
                                         </center>
                                         <hr>
                                         <h1 class=" text-muted text-uppercase text-center">{{ $each_plan->name }}</h1>
-                                        <h6 class="card-price text-center">${{ number_format($each_plan->amount) }}</h6>
+                                        <h6 class="card-price text-center">{{ number_format($each_plan->amount) }} <sup><small>NGN</small></sup> </h6>
                                         <ul class="fa-ul">
                                             <li>
                                                 <span class="fa-li"><i class="fas fa-check"></i></span>

@@ -17,8 +17,8 @@
                                 <input type="text" class="form-control" id="name" name="name" placeholder="Plan Name" required>
                             </div>
                             <div class="form-group">
-                                <label for="amount">{{ __('Plan Amount')}}<small class="text-danger">*</small>(USD)</label>
-                                <input type="number" class="form-control" id="amount" name="amount" placeholder="Plan Amount (USD)" required >
+                                <label for="amount">{{ __('Plan Amount')}}<small class="text-danger">*</small></label>
+                                <input type="number" class="form-control" id="amount" name="amount" placeholder="Plan Amount (NGN)" required >
                             </div>
                             <div class="form-group">
                                 <label for="duration">{{ __('Duration')}} <small class="text-danger">*</small>(Days)</label>

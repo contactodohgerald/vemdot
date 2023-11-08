@@ -38,7 +38,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="text-center logo p-2 px-5">
-                    <img src="{{asset('img/logo.png')}}" width="50">
+                    <img height="50" src="{{asset('logo.png')}}" alt="{{ env('APP_NAME') }}" >
                 </div>
                 <div class="invoice p-5">
                     <h5>Your order has been confirmed!</h5>
@@ -94,7 +94,7 @@
                                         </td>
                                         <td width="20%">
                                             <div class="text-right">
-                                                <span class="font-weight-bold">&#x20A6; {{number_format($meal['unit_price'])}} * {{$meal['qty']}}</span>
+                                                <span class="font-weight-bold">NGN {{number_format($meal['unit_price'])}} * {{$meal['qty']}}</span>
                                             </div>
                                         </td>
                                     </tr>
@@ -116,7 +116,7 @@
                                         </td>
                                         <td>
                                             <div class="text-right">
-                                                <span>&#x20A6; {{number_format($order->amount)}}</span>
+                                                <span>NGN {{number_format($order->amount)}}</span>
                                             </div>
                                         </td>
                                     </tr>
@@ -128,7 +128,7 @@
                                         </td>
                                         <td>
                                             <div class="text-right">
-                                                <span>&#x20A6; {{number_format($order->delivery_fee)}}</span>
+                                                <span>NGN {{number_format($order->delivery_fee)}}</span>
                                             </div>
                                         </td>
                                     </tr>
@@ -164,7 +164,7 @@
                                         </td>
                                         <td>
                                             <div class="text-right">
-                                                <span class="font-weight-bold">&#x20A6; {{number_format($order->amount + $order->delivery_fee)}}</span>
+                                                <span class="font-weight-bold">NGN {{number_format($order->amount + $order->delivery_fee)}}</span>
                                             </div>
                                         </td>
                                     </tr>
@@ -177,7 +177,7 @@
                     <p class="font-weight-bold mb-0">Thanks for shopping with us!</p> <span>{{env('APP_NAME')}} Team</span>
                     </div>
                     <div class="d-flex justify-content-between footer p-3">
-                        <span>Need Help? Visit our <a href="#"> help center</a></span>
+                        <span>Need Help? Visit our <a href="{{ env('APP_URL') }}"> help center</a></span>
                         <span>{{now()->format('jS F, Y')}}</span>
                     </div>
                 </div>

@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\HomeController;
@@ -45,7 +44,8 @@ Route::get('/order/invoice/{reference}', [OrderController::class, 'downloadInvoi
 
 Route::get('login', [LoginController::class,'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class,'login']);
-Route::post('register', [RegisterController::class,'register']);
+
+//Route::post('register', [RegisterController::class,'register']);
 
 Route::get('password/forget',  function () {
 	return view('pages.forgot-password');
@@ -282,5 +282,6 @@ Route::group(['middleware' => 'auth', 'blocked'], function(){
 });
 
 
-Route::get('/register', function () { return view('pages.register'); });
-Route::get('/login-1', function () { return view('pages.login'); });
+Route::get('/register', function () { 
+	return redirect()->to('login');
+});

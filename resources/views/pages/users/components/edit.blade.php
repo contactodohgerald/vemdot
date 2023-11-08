@@ -19,7 +19,7 @@
     </div>
     <hr>
     <p class="mt-30">{{$user->city}}, {{$user->state}}, {{$user->address}}, {{$user->countries ? $user->countries->name : null}} </p>
-    @if(in_array($user->userRole->name, ['Vendor', 'Logistic', 'Rider', 'Super Admin']))
+    @if(in_array(optional($user->userRole)->name, ['Vendor', 'Logistic', 'Rider', 'Super Admin']))
         <h4 class="mt-30">{{ __('Skill Set')}}</h4>
         <hr>
         <h6 class="mt-30">{{ __('Business Name')}}</h6>
