@@ -91,7 +91,7 @@ class OrderController extends Controller
         return $orderService->initiatePayment($request, $transaction, $user, $order);
     }
     
-      function assignRiderToOrder(Request $request)
+    function assignRiderToOrder(Request $request)
     {
         $user = auth()->user();
 

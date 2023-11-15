@@ -60,7 +60,7 @@ trait ReturnTemplate {
             'not_authorized' => "You are not authorized to carry out this action",
             'pending_approval' => "Your account is pending approval",
             'exceed_rate' => "Rate must be between 0 and 5",
-            'no_bank_details' => "Set up a verified your bank account details to to proceed",
+            'no_bank_details' => "Set up a verified bank account detail to to proceed",
             'search_result' => "Search was Returned",
         ];
         return $messageArray[$keyword];

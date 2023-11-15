@@ -81,7 +81,7 @@
                             <p class="alert alert-success">Withdrawal request is handledand settled by Paystack, please ensure to have enough balance on your paystack wallet dashboard before initiating performing this action </p>
                             <div class="form-group">
                                 <label for="bank_name">Bank Name</label>
-                                <input type="text" class="form-control" readonly id="bank_name" value="{{$withdrawal->bankDetails->bank->name}}">
+                                <input type="text" class="form-control" readonly id="bank_name" value="{{optional($withdrawal->bankDetails->bank)->name}}">
                             </div>
                             <div class="form-group">
                                 <label for="name">Account Name</label>
@@ -106,7 +106,7 @@
                             <p class="alert alert-warning">By confirming this request, ensure you have made payment to the account details provided above. </p>
                             <div class="form-group">
                                 <label for="bank_name">Bank Name</label>
-                                <input type="text" class="form-control" readonly id="bank_name" value="{{$withdrawal->bankDetails->bank->name}}">
+                                <input type="text" class="form-control" readonly id="bank_name" value="{{optional($withdrawal->bankDetails->bank)->name}}">
                             </div>
                             <div class="form-group">
                                 <label for="name">Account Name</label>
@@ -153,7 +153,7 @@
                                             <div class="time"></div>
                                             <div class="desc">
                                                 <h3>Bank Name</h3>
-                                                <h3>{{$withdrawal->bankDetails->bank->name}}</h3>
+                                                <h3>{{optional($withdrawal->bankDetails->bank)->name}}</h3>
                                             </div>
                                         </li>
                                         <li>
@@ -161,7 +161,7 @@
                                             <div class="time"></div>
                                             <div class="desc">
                                                 <h3>Bank Code</h3>
-                                                <h3>{{$withdrawal->bankDetails->bank->code}}</h3>
+                                                <h3>{{optional($withdrawal->bankDetails->bank)->code}}</h3>
                                             </div>
                                         </li>
                                         <li>

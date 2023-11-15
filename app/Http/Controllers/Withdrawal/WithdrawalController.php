@@ -17,7 +17,7 @@ class WithdrawalController extends Controller
     {
         $bankDetails = BankDetail::where('user_id', $this->user()->unique_id)->get();
         if($bankDetails->count() > 0){
-            foreach($bankDetails as $bank){
+            foreach($bankDetails as $bank){ 
                 $bank->bank;
             }
             return $this->returnMessageTemplate(true, $this->returnSuccessMessage('fetched_all', 'Bank Details'), $bankDetails);
