@@ -45,6 +45,7 @@ trait ReturnTemplate {
             'unknown_error'=>'An error occurred, please try again',
             'insufficiant_fund'=>'Insufficiant Balance',
             'not_equal_password'=>'The provided password does not match your current password.',
+            'wrong_password'=>'Wrong password.',
             'not_found' => "$item was not Found",
             'wrong_code' => "You entered a wrong code.",
             'used_code' => "You entered a code that was previously used",
@@ -96,6 +97,7 @@ trait ReturnTemplate {
             'updated' => "$item updated successfully",
             'deleted' => "$item was deleted successfully",
             'payout' => "Payout was successfully",
+            'deleted_account' => "Your Account has been deleted",
             'ticket_sent' => "Ticket was successfully sent",
         ];
         return $messageArray[$keyword];

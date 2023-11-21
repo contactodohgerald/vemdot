@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DeleteAccountController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
@@ -250,6 +251,8 @@ Route::group(['middleware' => 'auth:sanctum', 'ability:full_access', 'blocked'],
         Route::post('create', [ReviewController::class, 'createReview']);
         Route::get('fetch/{type?}', [ReviewController::class, 'fetchAllReview']);
     });
+
+    Route::post('/delete-user-account', [DeleteAccountController::class, 'deleteAccount'])->name('delete-account');
 
 
 });
