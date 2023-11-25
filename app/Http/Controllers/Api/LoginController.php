@@ -48,21 +48,24 @@ class LoginController extends Controller
         $user->save();
 
         $data = $user->generateCodeFor2fa($user);
-        $notification = $this->notification();
-        // if($user->two_factor_access == 'email'){
-           //send mail incase of an error
-        $notification->subject('Your confirmation code')
-            ->text('Verification Needed')
-            ->text('Please confirm your sign-in request')
-            ->text('We have detected an account sign-in request from a device we don`t recognize')
-            ->code($data['code'])
-            ->text('To verify your account, please use the following code to sign-in to your account')
-            ->send($user, ['mail']);
-        // }
-        $message =  $appSettings->site_name.": ".$data['code']." is your security code. It exipres in 15 minutes. Don't share this code with anyone";
+        try {
+            $notification = $this->notification();
+            $notification->subject('Your confirmation code')
+                ->text('Verification Needed')
+                ->text('Please confirm your sign-in request')
+                ->text('We have detected an account sign-in request from a device we don`t recognize')
+                ->code($data['code'])
+                ->text('To verify your account, please use the following code to sign-in to your account')
+                ->send($user, ['mail']);
+        } catch (\Exception $e) {
+            error_log("Error sending email: " . $e->getMessage());
+            //echo "An error occurred while sending the email. Please try again later.";
+        }
+        
+        //$message =  $appSettings->site_name.": ".$data['code']." is your security code. It exipres in 15 minutes. Don't share this code with anyone";
         //send text message to the user
         // $sendTextMessage->sendTextMessage($user->phone, $appSettings->site_name, $message);
-  
+   
         if(env('APP_ENV') === 'local'){
             $payload = [
                 '2fa_code' => $data['code'],

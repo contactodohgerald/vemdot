@@ -29,6 +29,8 @@ trait Options {
     public $unread = 'unread';
     public $read = 'read';
 
+    public $emailList = ['test@production.com', 'vendortest@gmail.com', 'vendorprod@gmail.com', 'logisticprod@gmail.com', 'logisticstest@gmail.com', 'riderprod@gmail.com', 'user@vemdot.com'];
+
     public $orderProgression = ['cash', 'paid', 'cancelled', 'declined', 'processing', 'terminated', 'done', 'enroute', 'pickedup', 'returned', 'delivered', 'accepted', 'rejected'];
 
     public $orderUserActions = [

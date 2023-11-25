@@ -5,9 +5,10 @@ use App\Models\User;
 use App\Models\UserCode;
 use App\Traits\ReturnTemplate;
 use Carbon\Carbon;
+use App\Traits\Options;
 
 trait VerifyTwoFactor {
-    use ReturnTemplate;
+    use ReturnTemplate, Options;
 
     public function verifyTwofactor($data)
     {
@@ -19,15 +20,14 @@ trait VerifyTwoFactor {
         if(!$find)
             return ['status' => false, 'message' => $this->returnErrorMessage('wrong_code')];
 
-        $emailList = ['test@production.com', 'vendorprod@gmail.com', 'logisticprod@gmail.com', 'riderprod@gmail.com'];
-        if($find->status == 'used' && !in_array(optional($user)->email, $emailList))
+        if($find->status == 'used' && !in_array(optional($user)->email, $this->emailList))
             return ['status' => false, 'message' => $this->returnErrorMessage('used_code')];
 
         //add thirty minutes to the time for the code that was created
         $currentTime = Carbon::now()->toDateTimeString();
         $expirationTime = Carbon::parse($find->created_at)->addMinutes(30)->toDateTimeString();
         //compare the dates
-        if ($currentTime > $expirationTime && !in_array(optional($user)->email, $emailList))
+        if ($currentTime > $expirationTime && !in_array(optional($user)->email, $this->emailList))
             return ['status' => false, 'message' => $this->returnErrorMessage('expired_token')];
         
         if (!is_null($find)) {

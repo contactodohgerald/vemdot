@@ -150,9 +150,9 @@
                                         <tr>
                                             <td class="text-center">{{ __(++$count)}}</td>
                                             <td class="text-center">{{ __($transaction->reference)}}</td>
-                                            <td class="text-center"><a href="/users/{{ __($transaction->owner->unique_id)}}">{{ __($transaction->owner->business_name ?? $transaction->owner->name )}}</a></td>
-                                            <td class="text-center">{{ __($transaction->owner->email)}}</td>
-                                            {{-- <td class="text-center">{{ __($transaction->owner->userRole->name)}}</td> --}}
+                                            <td class="text-center"><a href="/users/{{ __(optional($transaction->owner)->unique_id)}}">{{ __(optional($transaction->owner)->business_name ?? optional($transaction->owner)->name )}}</a></td>
+                                            <td class="text-center">{{ __(optional($transaction->owner)->email)}}</td>
+                                            {{-- <td class="text-center">{{ __(optional($transaction->owner)->userRole->name)}}</td> --}}
                                             <td class="text-center">{{ __(number_format($transaction->amount))}} {{auth()->user()->currency()}}</td>
                                             <td class="text-center">{{ __($transaction->channel)}}</td>
                                             <td class="text-center">
@@ -209,9 +209,9 @@
                                     @forelse ($withdrawals as $withdrawal)
                                         <tr>
                                             <td class="text-center">{{ __(++$count)}}</td>
-                                            {{-- <td class="text-center">{{ __($withdrawal->owner->userRole->name)}}</td> --}}
-                                            <td class="text-center"><a href="/users/{{ __($withdrawal->owner->unique_id)}}">{{ __($withdrawal->owner->business_name ?? $withdrawal->owner->name )}}</a></td>
-                                            <td class="text-center">{{ __(number_format($withdrawal->owner->main_balance))}} {{auth()->user()->currency()}}</td>
+                                            {{-- <td class="text-center">{{ __(optional($withdrawal->owner)->userRole->name)}}</td> --}}
+                                            <td class="text-center"><a href="/users/{{ __(optional($withdrawal->owner)->unique_id)}}">{{ __(optional($withdrawal->owner)->business_name ?? optional($withdrawal->owner)->name )}}</a></td>
+                                            <td class="text-center">{{ __(number_format(optional($withdrawal->owner)->main_balance))}} {{auth()->user()->currency()}}</td>
                                             <td class="text-center">{{ __(number_format($withdrawal->amount))}} {{auth()->user()->currency()}}</td>
                                             <td class="text-center">
                                                 <a href="#viewDetails{{$withdrawal->unique_id}}" data-toggle="modal" data-target="#viewDetails{{$withdrawal->unique_id}}" class="btn btn-primary">View Details</a>

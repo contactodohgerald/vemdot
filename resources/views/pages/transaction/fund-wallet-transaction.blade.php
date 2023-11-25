@@ -42,16 +42,16 @@
                 @php $count = 0; @endphp
                 @forelse ($transactions as $transaction)
                     @if(in_array($segment, ['Vendor', 'Logistic', 'User'])) 
-                        @if($transaction->owner->userRole->name != $segment)
+                        @if(optional($transaction->owner)->userRole->name != $segment)
                             @continue
                         @endif
                     @endif
                     <tr>
                         <td class="text-center">{{ __(++$count)}}</td>
                         <td class="text-center">{{ __($transaction->reference)}}</td>
-                        <td class="text-center"><a href="/users/{{ __($transaction->owner->unique_id)}}">{{ __($transaction->owner->business_name ?? $transaction->owner->name )}}</a></td>
-                        <td class="text-center">{{ __($transaction->owner->email)}}</td>
-                        <td class="text-center">{{ __($transaction->owner->userRole->name)}}</td>
+                        <td class="text-center"><a href="/users/{{ __(optional($transaction->owner)->unique_id)}}">{{ __(optional($transaction->owner)->business_name ?? optional($transaction->owner)->name )}}</a></td>
+                        <td class="text-center">{{ __(optional($transaction->owner)->email) ?? 'N/A'}}</td>
+                        <td class="text-center">{{ optional($transaction->owner)->userRole->name ?? 'N/A' }}</td>
                         <td class="text-center">{{ __(number_format($transaction->amount))}} {{auth()->user()->currency()}}</td>
                         <td class="text-center">{{ __($transaction->channel)}}</td>
                         <td class="text-center">

@@ -8,7 +8,7 @@ use App\Models\Role\AccountRole;
 use App\Models\Vendors\VendorLogistic;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Country\CountryList;
-use App\Models\Site\SiteSettings;
+use App\Traits\Options;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class User extends Authenticatable
 {
-    use HasFactory, HasApiTokens, Notifiable, SoftDeletes, Generics;
+    use HasFactory, HasApiTokens, Notifiable, SoftDeletes, Generics, Options;
 
     protected $primaryKey = 'unique_id';
     public $incrementing = false;
@@ -80,10 +80,8 @@ class User extends Authenticatable
     public function generateCodeFor2fa($user)
     {
         $code = rand(1000, 9999);
-
-        $emailList = ['test@production.com', 'vendorprod@gmail.com', 'logisticprod@gmail.com', 'riderprod@gmail.com'];
-
-        if (in_array(optional($user)->email, $emailList)) {
+        
+        if (in_array(optional($user)->email, $this->emailList)) {
             $code = "0000";
         }
 
